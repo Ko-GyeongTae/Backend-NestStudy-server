@@ -13,4 +13,8 @@ export class AppService {
   askHi(req): string{
     return req;
   }
+
+  findone(id): string{
+    return `${id}is finded!`;
+  }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post, Query, Redirect } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, Query, Redirect } from '@nestjs/common';
 import { AppService } from './app.service';
 
 
@@ -19,6 +19,11 @@ export class AppController {
   @Post('/hi')
   askHi(@Body()req: object): string {
     return this.appService.askHi(req);
+  }
+
+  @Get('/find/:id')
+  findone(@Param('id') id): string{
+    return this.appService.findone(id);
   }
 
   @Get('/docs')
