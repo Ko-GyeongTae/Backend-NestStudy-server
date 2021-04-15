@@ -41,5 +41,4 @@ export class AppController {
     return { url: 'https://docs.nestjs.com/v6/' };
   }
 }
-  
 }
