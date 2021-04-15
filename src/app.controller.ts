@@ -3,17 +3,19 @@ import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 
 
-@Controller('/api')
+@Controller('api')
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly authService: AuthService
   ) {}
+
   @Get('/auth')
   getAuth(): string {
     console.log('/api/auth');
     return this.authService.getauth();
   }
+  
   @Get()
   getHello(): string {
     return this.appService.getHello();
