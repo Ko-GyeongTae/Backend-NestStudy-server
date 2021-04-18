@@ -6,9 +6,10 @@ import { CommentService } from './comment/comment.service';
 import { CommentController } from './comment/comment.controller';
 import { CommentModule } from './comment/comment.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [AuthModule, CommentModule],
+  imports: [AuthModule, CommentModule, ChatModule],
   controllers: [AppController, CommentController],
   providers: [AppService, CommentService],
 })
