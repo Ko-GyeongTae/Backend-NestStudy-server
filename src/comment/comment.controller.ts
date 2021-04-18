@@ -1,13 +1,13 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Post } from '@nestjs/common';
 import { CommentService } from './comment.service';
 
-@Controller('comment')
+@Controller()
 export class CommentController {
     constructor(
         private readonly commentService: CommentService
     ){}
 
-    @Get()
+    @Get('list')
     getComment(): string {
         return this.commentService.getComment();
     }
@@ -17,9 +17,9 @@ export class CommentController {
         return this.commentService.createComment();
     }
 
-    @Post('update')
-    updateComment(): string {
-        return this.commentService.updateComment();
+    @Delete('update')
+    deleteComment(): string {
+        return this.commentService.deleteComment();
     }
 
 }

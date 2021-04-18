@@ -1,13 +1,15 @@
 import { Body, Controller, Get, HttpCode, Param, Post, Query, Redirect } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
+import { CommentService } from './comment/comment.service';
 
 
 @Controller('api')
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly commentService: CommentService
   ) {}
 
   @Get('/auth')
@@ -15,7 +17,12 @@ export class AppController {
     console.log('/api/auth');
     return this.authService.getauth();
   }
-  
+
+  @Get('comment')
+  getComment(): string {
+    return this.commentService.getComment();
+  }
+
   @Get()
   getHello(): string {
     return this.appService.getHello();

@@ -10,8 +10,8 @@ export class CommentService {
         return 'create comment';
     }
 
-    updateComment(): string {
-        return 'update comment';
+    deleteComment(): string {
+        return 'delete comment';
     }
 }
 
