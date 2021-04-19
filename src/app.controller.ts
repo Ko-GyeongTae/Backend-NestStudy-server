@@ -14,7 +14,6 @@ export class AppController {
 
   @Get('/auth')
   getAuth(): string {
-    console.log('/api/auth');
     return this.authService.getauth();
   }
 

@@ -9,7 +9,12 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [AuthModule, CommentModule, ChatModule],
+  imports: [
+    
+    ChatModule,
+    AuthModule, 
+    CommentModule
+  ],
   controllers: [AppController, CommentController],
   providers: [AppService, CommentService],
 })
