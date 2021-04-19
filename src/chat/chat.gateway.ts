@@ -1,26 +1,46 @@
+import { Logger } from '@nestjs/common';
 import {
-    MessageBody,
+    OnGatewayConnection,
+    OnGatewayDisconnect,
+    OnGatewayInit,
     SubscribeMessage,
     WebSocketGateway,
     WebSocketServer,
-    WsResponse,
 } from '@nestjs/websockets';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway()
-export class EventsGateway {
+@WebSocketGateway({ namespace: 'chat' }) // namespace는 optional 입니다!
+export class ChatGateway
+    implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
+    private static readonly logger = new Logger(ChatGateway.name);
+
     @WebSocketServer()
     server: Server;
 
-    @SubscribeMessage('events')
-    findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-        return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+    afterInit() {
+        ChatGateway.logger.debug(`Socket Server Init Complete`);
     }
 
-    @SubscribeMessage('identity')
-    async identity(@MessageBody() data: number): Promise<number> {
-        return data;
+    handleConnection(client: Socket) {
+        ChatGateway.logger.debug(
+            `${client.id}(${client.handshake.query['username']}) is connected!`,
+        );
+
+        this.server.emit('msgToClient', {
+            name: `admin`,
+            text: `join chat.`,
+        });
+    }
+
+    handleDisconnect(client: Socket) {
+        ChatGateway.logger.debug(`${client.id} is disconnected...`);
+    }
+
+    @SubscribeMessage('msgToServer')
+    handleMessage(
+        client: Socket,
+        payload: { name: string; text: string },
+    ): void {
+        this.server.emit('msgToClient', payload);
     }
 }
