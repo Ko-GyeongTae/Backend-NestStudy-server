@@ -1,26 +1,11 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { CommentService } from './comment/comment.service';
-import { CommentController } from './comment/comment.controller';
-import { CommentModule } from './comment/comment.module';
-import { LoggerMiddleware } from './middleware/logger.middleware';
-import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [
-    
-    ChatModule,
-    AuthModule, 
-    CommentModule
-  ],
-  controllers: [AppController, CommentController],
-  providers: [AppService, CommentService],
+  imports: [AuthModule],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer){
-    consumer
-      .apply(LoggerMiddleware).forRoutes(AppController);
-  }
-}
+export class AppModule {}
